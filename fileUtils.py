@@ -2,6 +2,9 @@ import codecs
 import chardet
 import os
 import pickle
+import csv
+import xlwt
+import xlrd
 
 def getCode1(file):
     '''
@@ -91,5 +94,57 @@ def deserializate(self,file):
         variable = pickle.load(f)
     return variable
 
+def getCSVContent(csvPath, titles):
+    '''获取 CSV 文件内容'''
+    csvFile = open(csvPath, "r", errors="ignore")
+    dict_reader = csv.DictReader(csvFile)
+    for row in dict_reader:
+        # print(row)
+        # print(type(row))
+        content = ""
+        for title in titles:
+            content += row.get(title) + ' '
+            # print(type(content)) # str
+        print(content)
+        # break
+
+def writeExcel(savePath,content):
+    '''Excel 写操作'''
+    #创建一个Workbook
+    book = xlwt.Workbook()
+    #创建一个sheet,参数 名字,是否覆盖原有内容
+    sheet = book.add_sheet("sheet1",cell_overwrite_ok=True)
+    #将查询出的数据添加到表格中
+    for row,rowContents in enumerate(content):
+        for col,value in enumerate(rowContents):
+            sheet.write(row,col,value)
+    book.save(savePath)
+
+def readExcel():
+    #打开文件获取数据
+    myfile = xlrd.open_workbook('sheet.xls')
+    # sheet_names = myfile.sheet_names()#获取表格中所有的sheet名字
+    # print(sheet_names)
+    #获取表单
+    sheet = myfile.sheet_by_index(0)
+    #sheet = myfile.sheets()[1]
+    #sheet = myfile.sheet_by_name('Sheet2')
+    # print(sheet.name)
+    # print(sheet.ncols)
+    # print(sheet.nrows)
+    # print(sheet.row_values(0))#获取某一行的所有值
+    # print(sheet.col_values(0))#获取某一列的所有值
+    #获取某个单元格的值
+    target = sheet.cell(0,1).value
+    target = sheet.row(0)[0].value
+    target = sheet.col(1)[1].value
+    print(target)
+    for row in range(0,sheet.nrows):
+        for col in range(0,sheet.ncols):
+            print(sheet.cell(row,col).value)
+        
 if __name__ == "__main__":
+    csvPath = 'C:\\Users\\endru\\Documents\\PersonalData\\AsiaInfo\\Document\\智能小信\\18.12.17-小信提取投诉内容\\xx.csv'
+    titles = ['工单ID','申告来源','来源地市']
+    getCSVContent(csvPath,titles)
     pass
