@@ -6,7 +6,7 @@ dic = {
 }
 
 # dumps 将字典转换为json字符串
-j = json.dumps(dic)
+j = json.dumps(dic,indent=2,ensure_ascii=False)
 print(f"{type(j)}:{j}")
 
 # loads 将json字符串转换为字典
@@ -15,8 +15,8 @@ js = json.loads(string)
 print(f'{type(js)}:{js}')
 
 # dump json 数据写入文件
-# with open('data.json', 'w') as wf:
-#     json.dump(j, wf)
+with open('data.json', 'w') as wf:
+    json.dump(j, wf)
  
 # load 文件中读取 json
 with open('data.json', 'r', encoding='utf-8') as rf:
