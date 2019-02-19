@@ -5,6 +5,7 @@ import pickle
 import csv
 import xlwt
 import xlrd
+from win32com.client import Dispatch
 
 def getCode1(file):
     '''
@@ -121,6 +122,7 @@ def writeExcel(savePath,content):
     book.save(savePath)
 
 def readExcel():
+    '''Excel 读操作'''
     #打开文件获取数据
     myfile = xlrd.open_workbook('sheet.xls')
     # sheet_names = myfile.sheet_names()#获取表格中所有的sheet名字
@@ -142,6 +144,48 @@ def readExcel():
     for row in range(0,sheet.nrows):
         for col in range(0,sheet.ncols):
             print(sheet.cell(row,col).value)
+
+def doc2pdf(doc_name, pdf_name):
+    """word文件转pdf"""
+    try:
+        word = Dispatch("Word.Application")
+        if os.path.exists(pdf_name):
+            os.remove(pdf_name)
+        worddoc = word.Documents.Open(doc_name,ReadOnly = 1)
+        worddoc.SaveAs(pdf_name, FileFormat = 17)
+        worddoc.Close()
+        word.Quit()
+        return pdf_name
+    except Exception as e:
+        print('Error:',e)
+
+def doc2docx(doc_name,docx_name):
+    """doc转docx"""
+    try:
+        w = Dispatch('Word.Application')
+        w.Visible = 0
+        w.DisplayAlerts=0
+        doc = w.Documents.Open(doc_name)
+        doc.SaveAs(docx_name,FileFormat=12)
+        doc.Close()
+        w.Quit()
+    except Exception as e:
+        print(e)
+
+def writeWord(path, value):
+    '''Word 覆写操作'''
+    try:
+        doc = docx.Document(path)
+        paragraphs=doc.paragraphs
+        p = paragraphs[0].clear()
+        r = p.add_run(value)
+        r.font.bold = True    #加粗
+        r.font.size = Pt(14)
+        r.font.name = u'宋体'
+        doc.save(path)
+    except Exception as e:
+        print(e)
+
         
 if __name__ == "__main__":
     csvPath = 'C:\\Users\\endru\\Documents\\PersonalData\\AsiaInfo\\Document\\智能小信\\18.12.17-小信提取投诉内容\\xx.csv'

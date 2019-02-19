@@ -109,7 +109,7 @@ class MailUtil(object):
             # 登录
             smtp.login(self.user, self.password)
             # 发送邮件
-            smtp.sendmail(self.sender, to, self.__mailInfo)
+            smtp.sendmail(self.sender, self.to, self.__mailInfo)
         except Exception as e:
             logging.error(repr(e))
             flag = False
