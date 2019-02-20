@@ -5,6 +5,7 @@ import pickle
 import csv
 import xlwt
 import xlrd
+from xlutils.copy import copy
 from win32com.client import Dispatch
 
 def getCode1(file):
@@ -144,6 +145,18 @@ def readExcel():
     for row in range(0,sheet.nrows):
         for col in range(0,sheet.ncols):
             print(sheet.cell(row,col).value)
+
+def modifyExcel(filePath, sheetNum):
+    '''Excel 修改操作 （只能保存为 xls 格式，报讯 xlsx 格式文件损坏）'''
+    # 打开文件获取数据
+    myfile = xlrd.open_workbook(filePath)
+    wb = copy(myfile)
+    # 通过get_sheet()获取的sheet有write()方法
+    ws = wb.get_sheet(sheetNum)
+    row = 0
+    col = 0
+    ws.write(row, col, "modify")
+    wb.save(filePath)
 
 def doc2pdf(doc_name, pdf_name):
     """word文件转pdf"""
