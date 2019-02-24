@@ -9,5 +9,5 @@ def hasChinese(s):
     return False
 
 def changeCode(string):
-    '''UTF-16 中文编码转换'''
+    '''Unicode 16进制 中文编码转换'''
     return string.encode('utf-8').decode('unicode_escape')
