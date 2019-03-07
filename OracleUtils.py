@@ -9,8 +9,13 @@ pwd = '****'
 host = 'localhost'
 port = 1521
 instance = 'ORCL'
+# 连接
+# 方法一
 info = f'{user}/{pwd}@{host}:{port}/{instance}'
-conn = cx_Oracle.connect(info)  # 连接
+conn = cx_Oracle.connect(info)  
+# # 方法二
+# dsn_tns = cx_Oracle.makedsn(host, port, instance)
+# conn = cx_Oracle.connect(user, pwd, dsn_tns)
 cursor = conn.cursor() # 创建游标对象
 
 def test():
