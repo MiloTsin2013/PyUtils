@@ -96,20 +96,6 @@ def deserializate(self,file):
         variable = pickle.load(f)
     return variable
 
-def getCSVContent(csvPath, titles):
-    '''获取 CSV 文件内容'''
-    csvFile = open(csvPath, "r", errors="ignore")
-    dict_reader = csv.DictReader(csvFile)
-    for row in dict_reader:
-        # print(row)
-        # print(type(row))
-        content = ""
-        for title in titles:
-            content += row.get(title) + ' '
-            # print(type(content)) # str
-        print(content)
-        # break
-
 def writeExcel(savePath,content):
     '''Excel 写操作'''
     #创建一个Workbook
@@ -201,7 +187,4 @@ def writeWord(path, value):
 
         
 if __name__ == "__main__":
-    csvPath = 'C:\\Users\\endru\\Documents\\PersonalData\\AsiaInfo\\Document\\智能小信\\18.12.17-小信提取投诉内容\\xx.csv'
-    titles = ['工单ID','申告来源','来源地市']
-    getCSVContent(csvPath,titles)
     pass
