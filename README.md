@@ -11,3 +11,7 @@
 - jsonUtils json工具
 - timeUtils 时间工具
 - CSVUtils CSV文件处理工具
+- gitMonitorUtil Git 仓库文件变动监控工具
+- confluenceUtil Confluence 工具类
+- cronUtil Crontab 操作工具类
+- fileMonitorUtil Linux 文件变更监控工具类

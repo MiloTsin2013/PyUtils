@@ -1,0 +1,12 @@
+#!/usr/bin/expect
+set git_user Username
+set git_pwd Password
+
+spawn git pull
+expect "Username*"
+send "$git_user\r"
+expect "Password*"
+send "$git_pwd\r"
+expect eof
+
+exit 0
